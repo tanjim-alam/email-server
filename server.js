@@ -1,0 +1,78 @@
+require('dotenv').config();
+const express = require('express');
+const nodemailer = require('nodemailer');
+const cors = require("cors");
+
+const app = express();
+const port = 3000;
+
+// Middleware
+const corsOptions = {
+    origin: "http://127.0.0.1:5501/index.html",
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+let transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT || 587,
+    secure: process.env.SMTP_PORT == 465,
+    pool: true,
+    maxConnections: 5,
+    maxMessages: 10,
+    auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
+    }
+});
+
+app.get("/", (req, res) => {
+    res.status(200).json({
+        message: "Wow SMTP1"
+    })
+})
+
+app.post('/send-email', async (req, res) => {
+    if (!req.body.name || !req.body.email || !req.body.number) {
+        res.status(400).json({
+            success: false,
+            message: "All fields are required"
+        });
+        return;
+    }
+
+    try {
+        const result = await transporter.sendMail({
+            from: `"${req.body.name}" <${req.body.email}>`,
+            to: req.body.company_email || 'info@mndigital.in',
+            subject: `New Enquiry from ${req.body.project_name}`,
+            html: `
+                <h4>
+                    Name: ${req.body.name}<br>
+                    Email: ${req.body.email}<br>
+                    Mobile Number: ${req.body.number}<br>
+                    Country Code: ${req.body.counter_code}
+                </h4>
+            `,
+            replyTo: req.body.email
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "Processing your request, we will notify you shortly.",
+            data: result
+        });
+    } catch (error) {
+        console.log(error)
+        throw new Error(error)
+    }
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
