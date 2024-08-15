@@ -56,7 +56,7 @@ app.post('/send-email', async (req, res) => {
                     Name: ${req.body.name}<br>
                     Email: ${req.body.email}<br>
                     Mobile Number: ${req.body.number}<br>
-                    Country Code: ${req.body.counter_code}
+                    Country Code: ${req.body.country_code}
                 </h4>
             `,
             replyTo: req.body.email
