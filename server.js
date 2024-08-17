@@ -8,7 +8,7 @@ const port = 3000;
 
 // Middleware
 const corsOptions = {
-    origin: "http://127.0.0.1:5501/index.html",
+    origin: "*",
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,
