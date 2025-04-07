@@ -48,7 +48,7 @@ app.post('/send-email', async (req, res) => {
 
     try {
         const result = await transporter.sendMail({
-            from: `"${req.body.name}" <${req.body.email}>`,
+            from: `"${req.body.name}" <m2ndigitalagency@gmail.com>`,
             to: req.body.company_email || 'info@mndigital.in',
             subject: `New Enquiry from ${req.body.project_name}`,
             html: `
