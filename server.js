@@ -8,7 +8,7 @@ const port = 3000;
 
 // Middleware
 const corsOptions = {
-    origin: "*",
+    origin: "https://projects-launch.in",
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,
