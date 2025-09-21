@@ -4,11 +4,11 @@ const nodemailer = require('nodemailer');
 const cors = require("cors");
 
 const app = express();
-const port = 3000;
+const port = 8081;
 
 // Middleware
 const corsOptions = {
-    origin: "https://projects-launch.in",
+    origin: "*",
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,
