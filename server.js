@@ -4,7 +4,11 @@ const nodemailer = require('nodemailer');
 const cors = require("cors");
 
 const app = express();
+<<<<<<< HEAD
 const port = 8081;
+=======
+const port = 8080;
+>>>>>>> 2416490 (updated server.js)
 
 // Middleware
 const corsOptions = {
@@ -17,15 +21,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 let transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
+    host: process.env.SMTP_HOST || "server.mpi.ktv.mybluehostin.me",
     port: process.env.SMTP_PORT || 587,
     secure: process.env.SMTP_PORT == 465,
     pool: true,
     maxConnections: 5,
     maxMessages: 10,
     auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS
+        user: process.env.SMTP_USER || "info@sumadhurafolium.co",
+        pass: process.env.SMTP_PASS || "City@12345#"
     }
 });
 
